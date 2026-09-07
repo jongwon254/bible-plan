@@ -1,0 +1,12 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // No login on this app, so anyone with the URL can read/write their own
+    // checkmarks. That's fine for a personal single-device-ish app; the
+    // reading plan text itself is a static file, not stored here.
+    match /progress/{dayId} {
+      allow read, write: if true;
+    }
+    // Everything else stays locked down by default.
+  }
+}
