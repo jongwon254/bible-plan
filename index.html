@@ -8,24 +8,36 @@
 </head>
 <body>
 <div id="app">
-  <header>
-    <button id="prevBtn" class="nav-btn" aria-label="이전 날">‹</button>
-    <div class="date-block">
-      <select id="weekSelect" class="week-select"></select>
-      <div id="dateLabel" class="date-label">-</div>
-      <button id="todayBtn" class="today-btn">오늘</button>
-    </div>
-    <button id="nextBtn" class="nav-btn" aria-label="다음 날">›</button>
-  </header>
+  <div id="checklistSection">
+    <header>
+      <button id="prevBtn" class="nav-btn" aria-label="이전 날">‹</button>
+      <div class="date-block">
+        <select id="weekSelect" class="week-select"></select>
+        <div id="dateLabel" class="date-label">-</div>
+        <button id="todayBtn" class="today-btn">오늘</button>
+      </div>
+      <button id="nextBtn" class="nav-btn" aria-label="다음 날">›</button>
+    </header>
 
-  <div class="progress-wrap">
-    <div class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
-    <div id="progressText" class="progress-text">0 / 0</div>
+    <div class="progress-wrap">
+      <div class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
+      <div id="progressText" class="progress-text">0 / 0</div>
+    </div>
+
+    <main id="list"></main>
+
+    <button id="statsBtn" class="stats-link">전체 진행률 보기</button>
+    <p id="statusMsg" class="status-msg" hidden></p>
   </div>
 
-  <main id="list"></main>
-
-  <p id="statusMsg" class="status-msg" hidden></p>
+  <div id="progressSection" hidden>
+    <header class="stats-header">
+      <button id="backBtn" class="nav-btn" aria-label="돌아가기">‹</button>
+      <div class="date-label">진행률</div>
+      <span class="nav-btn" aria-hidden="true" style="visibility:hidden">‹</span>
+    </header>
+    <div id="statsList"></div>
+  </div>
 </div>
 
 <script type="module" src="app.js"></script>

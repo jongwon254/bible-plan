@@ -1,6 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
 import {
   getFirestore,
+  collection,
   doc,
   onSnapshot,
   setDoc,
@@ -19,10 +20,16 @@ const listEl = document.getElementById("list");
 const progressFill = document.getElementById("progressFill");
 const progressText = document.getElementById("progressText");
 const statusMsg = document.getElementById("statusMsg");
+const checklistSection = document.getElementById("checklistSection");
+const progressSection = document.getElementById("progressSection");
+const statsBtn = document.getElementById("statsBtn");
+const backBtn = document.getElementById("backBtn");
+const statsList = document.getElementById("statsList");
 
 let plan = [];
 let currentIndex = 0;
 let unsubscribe = null;
+let statsUnsubscribe = null;
 
 function todayId() {
   const d = new Date();
@@ -54,6 +61,10 @@ function renderHeader(day) {
   prevBtn.disabled = currentIndex <= 0;
   nextBtn.disabled = currentIndex >= plan.length - 1;
   todayBtn.hidden = day.id === todayId();
+}
+
+function countVerses(day) {
+  return day.items.filter((it) => it.type === "verse").length;
 }
 
 function renderList(day, checkedMap) {
@@ -154,6 +165,80 @@ function showDay(index) {
     }
   );
 }
+
+function renderProgressView(progressMap) {
+  statsList.innerHTML = "";
+
+  const weeks = [...new Set(plan.map((d) => d.week))].sort((a, b) => a - b);
+  for (const week of weeks) {
+    const daysInWeek = plan.filter((d) => d.week === week);
+    let weekTotal = 0;
+    let weekDone = 0;
+
+    const dayRows = daysInWeek.map((day) => {
+      const total = countVerses(day);
+      const checked = progressMap[day.id] || {};
+      const done = Object.values(checked).filter(Boolean).length;
+      weekTotal += total;
+      weekDone += done;
+
+      const row = document.createElement("div");
+      row.className = "stats-day-row";
+      row.innerHTML = `
+        <div class="stats-day-label">${day.month}월 ${day.day}일 (${day.weekday})</div>
+        <div class="stats-mini-bar"><div class="stats-mini-fill" style="width:${total ? (done / total) * 100 : 0}%"></div></div>
+        <div class="stats-day-count">${done}/${total}</div>
+      `;
+      row.addEventListener("click", () => {
+        const idx = plan.findIndex((d) => d.id === day.id);
+        if (idx !== -1) {
+          showDay(idx);
+          hideProgressView();
+        }
+      });
+      return row;
+    });
+
+    const weekHeader = document.createElement("div");
+    weekHeader.className = "stats-week-header";
+    weekHeader.innerHTML = `
+      <span>${week}주차</span>
+      <span class="stats-week-count">${weekDone} / ${weekTotal}</span>
+    `;
+
+    const weekWrap = document.createElement("div");
+    weekWrap.className = "stats-week";
+    weekWrap.appendChild(weekHeader);
+    dayRows.forEach((r) => weekWrap.appendChild(r));
+    statsList.appendChild(weekWrap);
+  }
+}
+
+function showProgressView() {
+  checklistSection.hidden = true;
+  progressSection.hidden = false;
+
+  if (statsUnsubscribe) statsUnsubscribe();
+  statsUnsubscribe = onSnapshot(collection(db, "progress"), (snap) => {
+    const map = {};
+    snap.forEach((d) => {
+      map[d.id] = d.data().checked || {};
+    });
+    renderProgressView(map);
+  });
+}
+
+function hideProgressView() {
+  progressSection.hidden = true;
+  checklistSection.hidden = false;
+  if (statsUnsubscribe) {
+    statsUnsubscribe();
+    statsUnsubscribe = null;
+  }
+}
+
+statsBtn.addEventListener("click", showProgressView);
+backBtn.addEventListener("click", hideProgressView);
 
 prevBtn.addEventListener("click", () => {
   if (currentIndex > 0) showDay(currentIndex - 1);
