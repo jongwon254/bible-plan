@@ -253,7 +253,7 @@ weekSelect.addEventListener("change", () => {
   if (idx !== -1) showDay(idx);
 });
 
-fetch("data/plan.json")
+fetch("data/plan.json", { cache: "no-cache" })
   .then((res) => res.json())
   .then((data) => {
     plan = data.slice().sort((a, b) => (a.id < b.id ? -1 : 1));
