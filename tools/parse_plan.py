@@ -16,12 +16,16 @@ OUT_PATH = os.path.join(BASE, "data", "plan.json")
 
 YEAR = 2026  # bump this if/when the plan crosses into a new year
 
-BOOKS = "마태복음|누가복음|마가복음|요한복음|마태|마가|누가|요한|마|막|눅|요"
+BOOKS = "마태복음|누가복음|마가복음|요한복음|사도행전|마태|마가|누가|요한|마|막|눅|요|행"
 BOOK_START_RE = re.compile(r'^(' + BOOKS + r')\s*\d')
 BOOK_MATCH_RE = re.compile(r'^(' + BOOKS + r')\s*(.*)$', re.DOTALL)
-HEADER_RE = re.compile(r'☆\s*(\d{1,2})월\s*(\d{1,2})일?\s*\(\s*([^)]*?)\s*\)')
+# Weekday parenthetical is optional — some entries in the source omit it entirely.
+HEADER_RE = re.compile(r'☆\s*(\d{1,2})월\s*(\d{1,2})일?\s*(?:\(\s*[^)]*?\s*\))?')
 SPLIT_RE = re.compile(r'[,;]|\.\s+(?=(?:' + BOOKS + r'))')
 PAREN_RE = re.compile(r'\(([^()]*)\)')
+# A verse continuing the previous item's book without restating it, e.g.
+# "행7:1-8:13, 8:26-40" — the second chunk inherits 행 from the first.
+BARE_REF_RE = re.compile(r'^\d+[:\-]')
 
 
 def normalize_ref(chunk):
@@ -47,20 +51,27 @@ def normalize_ref(chunk):
     return book + rest, note, flagged
 
 
-def parse_line_items(line):
+def parse_line_items(line, state):
     line = line.strip()
     line = re.sub(r'^\*+\s*', '', line)
     line = re.sub(r'(?<=\d);(?=\d)', ':', line)
     if not line:
         return []
     items = []
-    if BOOK_START_RE.match(line):
+    if BOOK_START_RE.match(line) or (state["last_book"] and BARE_REF_RE.match(line)):
         for p in SPLIT_RE.split(line):
             p = p.strip()
             if not p:
                 continue
             if BOOK_START_RE.match(p):
+                state["last_book"] = BOOK_MATCH_RE.match(p).group(1)
                 ref, note, flagged = normalize_ref(p)
+                entry = {"type": "verse", "ref": ref}
+                if note:
+                    entry["note"] = note
+                items.append((entry, flagged, p))
+            elif state["last_book"] and BARE_REF_RE.match(p):
+                ref, note, flagged = normalize_ref(state["last_book"] + p)
                 entry = {"type": "verse", "ref": ref}
                 if note:
                     entry["note"] = note
@@ -84,8 +95,9 @@ def main():
         body = raw[start:end].lstrip()
         body = re.sub(r'^\)+\s*', '', body)
         items = []
+        state = {"last_book": None}
         for l in body.split('\n'):
-            for entry, flagged, raw_txt in parse_line_items(l):
+            for entry, flagged, raw_txt in parse_line_items(l, state):
                 items.append(entry)
                 if flagged:
                     flags.append((month, day, raw_txt, entry.get("ref")))

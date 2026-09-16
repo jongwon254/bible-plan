@@ -1101,5 +1101,177 @@
       }
     ],
     "week": 5
+  },
+  {
+    "id": "2026-09-14",
+    "month": 9,
+    "day": 14,
+    "weekday": "월",
+    "items": [
+      {
+        "type": "verse",
+        "ref": "마27:3-10"
+      },
+      {
+        "type": "verse",
+        "ref": "눅23장"
+      },
+      {
+        "type": "verse",
+        "ref": "막15장"
+      },
+      {
+        "type": "verse",
+        "ref": "마27:11-66"
+      }
+    ],
+    "week": 5
+  },
+  {
+    "id": "2026-09-15",
+    "month": 9,
+    "day": 15,
+    "weekday": "화",
+    "items": [
+      {
+        "type": "verse",
+        "ref": "요18:28-19장"
+      },
+      {
+        "type": "verse",
+        "ref": "요20장"
+      },
+      {
+        "type": "verse",
+        "ref": "눅24:1-49"
+      },
+      {
+        "type": "verse",
+        "ref": "막16:1-18"
+      }
+    ],
+    "week": 5
+  },
+  {
+    "id": "2026-09-16",
+    "month": 9,
+    "day": 16,
+    "weekday": "수",
+    "items": [
+      {
+        "type": "verse",
+        "ref": "마28:1-15"
+      },
+      {
+        "type": "verse",
+        "ref": "요21장"
+      },
+      {
+        "type": "verse",
+        "ref": "행1:1-11"
+      },
+      {
+        "type": "verse",
+        "ref": "마28:16-20"
+      },
+      {
+        "type": "verse",
+        "ref": "막16:19-20"
+      },
+      {
+        "type": "verse",
+        "ref": "눅24:50-53"
+      },
+      {
+        "type": "verse",
+        "ref": "행1:12-26"
+      },
+      {
+        "type": "verse",
+        "ref": "행2장"
+      }
+    ],
+    "week": 5
+  },
+  {
+    "id": "2026-09-17",
+    "month": 9,
+    "day": 17,
+    "weekday": "목",
+    "items": [
+      {
+        "type": "verse",
+        "ref": "행3-5장"
+      }
+    ],
+    "week": 5
+  },
+  {
+    "id": "2026-09-18",
+    "month": 9,
+    "day": 18,
+    "weekday": "금",
+    "items": [
+      {
+        "type": "verse",
+        "ref": "행7:1-8:13"
+      },
+      {
+        "type": "verse",
+        "ref": "행8:26-40"
+      },
+      {
+        "type": "verse",
+        "ref": "행8:14-25"
+      },
+      {
+        "type": "verse",
+        "ref": "행9:32-43"
+      },
+      {
+        "type": "verse",
+        "ref": "행10장"
+      }
+    ],
+    "week": 5
+  },
+  {
+    "id": "2026-09-19",
+    "month": 9,
+    "day": 19,
+    "weekday": "토",
+    "items": [
+      {
+        "type": "verse",
+        "ref": "행11장"
+      },
+      {
+        "type": "verse",
+        "ref": "행9:1-31"
+      },
+      {
+        "type": "verse",
+        "ref": "행11:19-30"
+      },
+      {
+        "type": "verse",
+        "ref": "행12:1-25"
+      }
+    ],
+    "week": 5
+  },
+  {
+    "id": "2026-09-20",
+    "month": 9,
+    "day": 20,
+    "weekday": "주일",
+    "items": [
+      {
+        "type": "verse",
+        "ref": "행13-15장",
+        "note": "1차 전도와 종교회의"
+      }
+    ],
+    "week": 6
   }
 ]
