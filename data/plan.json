@@ -1397,5 +1397,120 @@
       }
     ],
     "week": 6
+  },
+  {
+    "id": "2026-09-28",
+    "month": 9,
+    "day": 28,
+    "weekday": "월",
+    "items": [
+      {
+        "type": "verse",
+        "ref": "고전12-14장"
+      }
+    ],
+    "week": 7
+  },
+  {
+    "id": "2026-09-29",
+    "month": 9,
+    "day": 29,
+    "weekday": "화",
+    "items": [
+      {
+        "type": "verse",
+        "ref": "고전15-16장"
+      },
+      {
+        "type": "note",
+        "text": "서신서에서 나와"
+      },
+      {
+        "type": "verse",
+        "ref": "행19:23-41"
+      },
+      {
+        "type": "verse",
+        "ref": "행20:1-2a"
+      },
+      {
+        "type": "note",
+        "text": "서신서"
+      },
+      {
+        "type": "verse",
+        "ref": "고후1장"
+      }
+    ],
+    "week": 7
+  },
+  {
+    "id": "2026-09-30",
+    "month": 9,
+    "day": 30,
+    "weekday": "수",
+    "items": [
+      {
+        "type": "verse",
+        "ref": "고후2-5장"
+      }
+    ],
+    "week": 7
+  },
+  {
+    "id": "2026-10-01",
+    "month": 10,
+    "day": 1,
+    "weekday": "목",
+    "items": [
+      {
+        "type": "verse",
+        "ref": "고후6-9장"
+      }
+    ],
+    "week": 7
+  },
+  {
+    "id": "2026-10-02",
+    "month": 10,
+    "day": 2,
+    "weekday": "금",
+    "items": [
+      {
+        "type": "verse",
+        "ref": "고후10-13장"
+      }
+    ],
+    "week": 7
+  },
+  {
+    "id": "2026-10-03",
+    "month": 10,
+    "day": 3,
+    "weekday": "토",
+    "items": [
+      {
+        "type": "verse",
+        "ref": "행20:2b-3a"
+      },
+      {
+        "type": "verse",
+        "ref": "롬1-3장"
+      }
+    ],
+    "week": 7
+  },
+  {
+    "id": "2026-10-04",
+    "month": 10,
+    "day": 4,
+    "weekday": "주일",
+    "items": [
+      {
+        "type": "verse",
+        "ref": "롬4장"
+      }
+    ],
+    "week": 7
   }
 ]

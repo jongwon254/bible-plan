@@ -16,7 +16,7 @@ OUT_PATH = os.path.join(BASE, "data", "plan.json")
 
 YEAR = 2026  # bump this if/when the plan crosses into a new year
 
-BOOKS = "마태복음|누가복음|마가복음|요한복음|사도행전|살전|살후|고전|마태|마가|누가|요한|마|막|눅|요|행|갈"
+BOOKS = "마태복음|누가복음|마가복음|요한복음|사도행전|살전|살후|고전|고후|마태|마가|누가|요한|마|막|눅|요|행|갈|롬"
 BOOK_START_RE = re.compile(r'^(' + BOOKS + r')\s*\d')
 BOOK_MATCH_RE = re.compile(r'^(' + BOOKS + r')\s*(.*)$', re.DOTALL)
 # Weekday parenthetical is optional — some entries in the source omit it entirely.
