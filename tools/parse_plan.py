@@ -16,7 +16,7 @@ OUT_PATH = os.path.join(BASE, "data", "plan.json")
 
 YEAR = 2026  # bump this if/when the plan crosses into a new year
 
-BOOKS = "마태복음|누가복음|마가복음|요한복음|사도행전|살전|살후|고전|고후|마태|마가|누가|요한|마|막|눅|요|행|갈|롬"
+BOOKS = "마태복음|누가복음|마가복음|요한복음|사도행전|살전|살후|고전|고후|마태|마가|누가|요한|마|막|눅|요|행|갈|롬|골"
 BOOK_START_RE = re.compile(r'^(' + BOOKS + r')\s*\d')
 BOOK_MATCH_RE = re.compile(r'^(' + BOOKS + r')\s*(.*)$', re.DOTALL)
 # Weekday parenthetical is optional — some entries in the source omit it entirely.
@@ -31,6 +31,33 @@ CHAPTER_LIST_RE = re.compile(r'(?<![\w가-힣])(' + BOOKS + r')\s*(\d+(?:\s*,\s*
 # Hangul + digit that isn't a known book (e.g. a book abbreviation missing from
 # BOOKS) would silently become a note, so flag it for review instead.
 UNKNOWN_BOOK_RE = re.compile(r'^[가-힣]{1,3}\s*\d')
+
+# Canonical chapter counts, for catching typos like "행26-29장" (Acts has 28).
+CANON_BOOK = {
+    "마태복음": "마", "마태": "마", "마": "마",
+    "마가복음": "막", "마가": "막", "막": "막",
+    "누가복음": "눅", "누가": "눅", "눅": "눅",
+    "요한복음": "요", "요한": "요", "요": "요",
+    "사도행전": "행", "행": "행",
+    "갈": "갈", "롬": "롬", "골": "골",
+    "살전": "살전", "살후": "살후", "고전": "고전", "고후": "고후",
+}
+BOOK_MAX_CHAPTER = {
+    "마": 28, "막": 16, "눅": 24, "요": 21, "행": 28, "롬": 16,
+    "고전": 16, "고후": 13, "갈": 6, "살전": 5, "살후": 3, "골": 4,
+}
+
+
+def chapters_in(rest):
+    """Chapter numbers referenced by an already-normalized ref's non-book part."""
+    chapters = []
+    for i, part in enumerate(rest.split('-')):
+        m = re.match(r'^(\d+):', part) or re.match(r'^(\d+)장', part)
+        if not m and i == 0 and re.match(r'^\d+$', part):
+            m = re.match(r'^(\d+)$', part)
+        if m:
+            chapters.append(int(m.group(1)))
+    return chapters
 
 
 def collapse_chapter_list(m):
@@ -123,6 +150,15 @@ def main():
                 items.append(entry)
                 if flagged:
                     flags.append((month, day, raw_txt, entry.get("ref")))
+                elif entry["type"] == "verse":
+                    bm = BOOK_MATCH_RE.match(entry["ref"])
+                    canon = CANON_BOOK.get(bm.group(1)) if bm else None
+                    max_ch = BOOK_MAX_CHAPTER.get(canon)
+                    if max_ch:
+                        bad = [c for c in chapters_in(bm.group(2)) if c < 1 or c > max_ch]
+                        if bad:
+                            flags.append((month, day, raw_txt,
+                                          f"{entry['ref']} (chapter {bad[0]} > {canon} has {max_ch})"))
         date = datetime.date(YEAR, month, day)
         weekday = ["월", "화", "수", "목", "금", "토", "주일"][date.weekday()]
         days.append({

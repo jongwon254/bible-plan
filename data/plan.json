@@ -706,7 +706,7 @@
       },
       {
         "type": "verse",
-        "ref": "막17:14-21"
+        "ref": "마17:14-21"
       },
       {
         "type": "verse",
@@ -1512,5 +1512,96 @@
       }
     ],
     "week": 7
+  },
+  {
+    "id": "2026-10-05",
+    "month": 10,
+    "day": 5,
+    "weekday": "월",
+    "items": [
+      {
+        "type": "verse",
+        "ref": "롬5-8장"
+      }
+    ],
+    "week": 8
+  },
+  {
+    "id": "2026-10-06",
+    "month": 10,
+    "day": 6,
+    "weekday": "화",
+    "items": [
+      {
+        "type": "verse",
+        "ref": "롬9-12장"
+      }
+    ],
+    "week": 8
+  },
+  {
+    "id": "2026-10-07",
+    "month": 10,
+    "day": 7,
+    "weekday": "수",
+    "items": [
+      {
+        "type": "verse",
+        "ref": "롬13-16장"
+      }
+    ],
+    "week": 8
+  },
+  {
+    "id": "2026-10-08",
+    "month": 10,
+    "day": 8,
+    "weekday": "목",
+    "items": [
+      {
+        "type": "verse",
+        "ref": "행20:3b-22장"
+      }
+    ],
+    "week": 8
+  },
+  {
+    "id": "2026-10-09",
+    "month": 10,
+    "day": 9,
+    "weekday": "금",
+    "items": [
+      {
+        "type": "verse",
+        "ref": "행23-25장"
+      }
+    ],
+    "week": 8
+  },
+  {
+    "id": "2026-10-10",
+    "month": 10,
+    "day": 10,
+    "weekday": "토",
+    "items": [
+      {
+        "type": "verse",
+        "ref": "행26-28장"
+      }
+    ],
+    "week": 8
+  },
+  {
+    "id": "2026-10-11",
+    "month": 10,
+    "day": 11,
+    "weekday": "주일",
+    "items": [
+      {
+        "type": "verse",
+        "ref": "골1-4장"
+      }
+    ],
+    "week": 8
   }
 ]
